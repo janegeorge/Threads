@@ -96,8 +96,9 @@ class ReadMesssage implements Runnable{
             {
                 System.exit(0);
             }
-            System.out.println("Message received from the server :: " +message);
-            System.out.println("Enter your message");
+           // System.out.println("Message received from the server :: " +message);
+           //System.out.println("Enter your message");
+                       System.out.println(message);
             
              }
             }
