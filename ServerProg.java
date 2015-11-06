@@ -38,6 +38,9 @@ public class ServerProg implements Runnable{
              ReadMesssageServer rm=new ReadMesssageServer(socket,ivalue);
             Thread tr1=new Thread(rm);
             tr1.start();  
+                        WriteMesssageServer wms=new WriteMesssageServer(socket,ivalue);
+            Thread tr2=new Thread(wms);
+            tr2.start(); 
             
         }
     });
@@ -51,7 +54,7 @@ public class ServerProg implements Runnable{
             ServerSocket serverSocket = new ServerSocket(port);
               while(true){
                  // System.out.println("i value"+i);
-                  if(i<=5){
+                  if(i<=3){
             System.out.println("Server Started and listening to the port 5000");  
             socket = serverSocket.accept();
             System.out.println("client"+i+" connected.");
@@ -71,6 +74,38 @@ public class ServerProg implements Runnable{
             }
             catch(Exception e){
                 System.out.println(""+e);  
+            }
+         } 
+}
+class WriteMesssageServer implements Runnable{
+       private static Socket socket;
+       int ivalue=0;
+       WriteMesssageServer(Socket wSocket,int i){
+           socket=wSocket;
+           ivalue=i;
+       }
+   public void run(){
+
+            try{
+             OutputStream os = socket.getOutputStream();
+                OutputStreamWriter osw = new OutputStreamWriter(os);
+                BufferedWriter bw = new BufferedWriter(osw);
+                BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+                 //while(true){
+                    
+                bw.write(in.readLine()+"\n");
+                InetAddress ipAddr = InetAddress.getLocalHost();
+           // System.out.println(ipAddr.getHostAddress());
+
+                bw.write("IP:"+ipAddr.getHostAddress()+"\n");
+                bw.write("Port:5000"+"\n");
+                bw.write("StudentID:15310419"+"\n");
+                bw.flush();
+                 //}
+
+            }
+            catch(Exception e){
+                
             }
          } 
 }
@@ -96,7 +131,7 @@ class ReadMesssageServer implements Runnable{
                 System.out.println("Message received from client"+ivalue+" is :: "+message);
                 
                 }
-                    if (message.equalsIgnoreCase("Bye")) {
+                    if (message.equalsIgnoreCase("KILL_SERVICE")) {
 
                         int j = --sr.i;
                         System.out.println("j value"+j);
