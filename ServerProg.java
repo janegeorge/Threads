@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 public class ServerProg implements Runnable{
  private static Socket socket;
-  ExecutorService executor = Executors.newFixedThreadPool(5);  //Thread Pool of 5
+  ExecutorService executor = Executors.newFixedThreadPool(3);  //Thread Pool of 5
    static int i=1; //client no initialized
     public static void main(String[] args)
     {
